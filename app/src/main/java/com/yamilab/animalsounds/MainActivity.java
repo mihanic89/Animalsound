@@ -270,8 +270,8 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         screenHeight = size.y;
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
 
         initData();

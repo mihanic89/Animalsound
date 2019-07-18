@@ -20,29 +20,18 @@
         android:contentDescription="Image"
         android:gravity="center_horizontal" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_above="@+id/adView"
-    tools:context="com.yamilab.animalsounds.MainActivity">
+
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:layout_above="@+id/adView"
+        android:layout_margin="5dp">
 
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-        </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -59,11 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_above="@+id/appbarlayout"
         />
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
