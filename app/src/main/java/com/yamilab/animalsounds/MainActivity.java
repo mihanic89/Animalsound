@@ -1135,10 +1135,8 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         home.add(new Animal(getString(R.string.cow),R.drawable.h5hd,R.raw.h5,true,"h5.gif"));
         home.add(new Animal(getString(R.string.sheep),R.drawable.h7hd,R.raw.h7));
         home.add(new Animal(getString(R.string.horse),R.drawable.h6hd,R.raw.h6,true,"h6.gif"));
-
         home.add(new Animal(getString(R.string.goat),R.drawable.h8hd,R.raw.h8));
         home.add(new Animal(getString(R.string.donkey),R.drawable.h9hd,R.raw.h9));
-
         home.add(new Animal(getString(R.string.cavy),R.drawable.h11hd,R.raw.h11,true,"h11.gif"));
         home.add(new Animal(getString(R.string.turkey),R.drawable.h10hd,R.raw.h10));
         home.add(new Animal(getString(R.string.rabbit),R.drawable.h12rabbit,R.raw.h12,true,"h12.gif"));
@@ -1153,7 +1151,6 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         aqua.add(new Animal(getString(R.string.walrus),R.drawable.a4hd,R.raw.a4));
         aqua.add(new Animal(getString(R.string.sealion),R.drawable.a5hd,R.raw.a5));
         aqua.add(new Animal(getString(R.string.whale),R.drawable.a6hd,R.raw.a6));
-
         aqua.add(new Animal(getString(R.string.turtle),R.drawable.a8turtle,R.raw.a8,true,"a8.gif"));
         aqua.add(new Animal(getString(R.string.fish),R.drawable.a7hd,R.raw.a7));
         aqua.add(new Animal(getString(R.string.otter),R.drawable.a9otter,R.raw.a9,true,"a9.gif"));
@@ -1170,16 +1167,13 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         birds.add(new Animal(getString(R.string.hawk),R.drawable.b7hd,R.raw.b7));
         birds.add(new Animal(getString(R.string.woodpecker),R.drawable.b8hd,R.raw.b8,true,"b8.gif"));
         birds.add(new Animal(getString(R.string.pelican),R.drawable.b12hd,R.raw.b12));
-
         birds.add(new Animal(getString(R.string.parrot),R.drawable.b9hd,R.raw.b9,true,"b9.gif"));
         birds.add(new Animal(getString(R.string.catbird),R.drawable.b16catbird,R.raw.b16));
         birds.add(new Animal(getString(R.string.owl),R.drawable.b10hd,R.raw.b10,true,"b10.gif"));
         birds.add(new Animal(getString(R.string.cuckoo),R.drawable.b11hd,R.raw.b11));
-
         birds.add(new Animal(getString(R.string.ostrich),R.drawable.b13hd,R.raw.b13));
         birds.add(new Animal(getString(R.string.flamingo),R.drawable.b14hd,R.raw.b14,true,"b14.gif"));
         birds.add(new Animal(getString(R.string.peacock),R.drawable.b15hd,R.raw.b15));
-
         birds.add(new Animal(getString(R.string.tit),R.drawable.b17tit,R.raw.b17));
         birds.add(new Animal(getString(R.string.toucan),R.drawable.b18toucan,R.raw.b18));
         birds.add(new Animal(getString(R.string.robin),R.drawable.b19robin,R.raw.b19));
@@ -1190,7 +1184,6 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         birds.add(new Animal(getString(R.string.heron),R.drawable.b25heron,R.raw.b25));
         birds.add(new Animal(getString(R.string.canary),R.drawable.b26canary,R.raw.b26));
         birds.add(new Animal(getString(R.string.magpie),R.drawable.b27magpie,R.raw.b27));
-
         birds.add(new Animal(getString(R.string.jay),R.drawable.b29jay,R.raw.b29));
         birds.add(new Animal(getString(R.string.starling),R.drawable.b30starling,R.raw.b30));
         birds.add(new Animal(getString(R.string.sparrow),R.drawable.b31,R.raw.b31));
