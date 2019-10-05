@@ -14,13 +14,16 @@
     <string name="clicktext">Натисніть на текст</string>
     <string name="buy_ads_disable">Видалити оголошення</string>
 
-    <string name="rd_title">Вам сподобалося додаток?</string>
+    <string name="rd_title">Ви хочете оцінити додаток в Google Play?</string>
     <string name="rd_positiveButtonText">пізніше</string>
     <string name="rd_negativeButtonText">ніколи</string>
     <string name="rd_formTitle">відправити відгук</string>
     <string name="rd_formHint">Розкажіть нам що можна поліпшити</string>
     <string name="rd_formSubmitText">Надіслати</string>
     <string name="rd_formCancelText">Скасувати</string>
+
+    <string name="unlock_text1">Вам потрібно вгадати</string>
+    <string name="unlock_text2">тварин в будь-якій грі щоб розблокувати цю вкладку</string>
 
 
 

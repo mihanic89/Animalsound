@@ -15,13 +15,15 @@
     <string name="clicktext">انقر على النص</string>
     <string name="gametext">خمن الحيوانات</string>
     <string name="buy_ads_disable">احذف الإعلانات</string>
-    <string name="rd_title">كيف كانت تجربتك معنا؟</string>
+    <string name="rd_title">هل تريد تطبيق معدل في Google Play؟</string>
     <string name="rd_positiveButtonText">ربما لاحقا</string>
     <string name="rd_negativeButtonText">أبدا</string>
     <string name="rd_formTitle">تقديم تعليقات</string>
     <string name="rd_formHint">أخبرنا أين يمكننا أن نتطور</string>
     <string name="rd_formSubmitText">قدم</string>
     <string name="rd_formCancelText">إلغاء</string>
+    <string name="unlock_text1">عليك أن تخمن</string>
+    <string name="unlock_text2">الحيوانات في أي لعبة لفتح هذا اللسان</string>
 
 <string name="fromdottodot">الرسم</string>
 <string name="draw">الرسم</string>

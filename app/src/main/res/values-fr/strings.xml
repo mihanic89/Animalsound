@@ -17,13 +17,16 @@
     <string name="gametext">Devinez les animaux par le son</string>
     <string name="buy_ads_disable">Supprimer les annonces</string>
 
-    <string name="rd_title">Avez-vous aimé l\'\application?</string>
+    <string name="rd_title">Voulez-vous évaluer l"'"application dans Google Play?</string>
     <string name="rd_positiveButtonText">Plus tard</string>
     <string name="rd_negativeButtonText">Jamais</string>
     <string name="rd_formTitle">Envoyer des commentaires</string>
     <string name="rd_formHint">Dites-nous ce qui peut être amélioré.</string>
     <string name="rd_formSubmitText">À envoyer</string>
     <string name="rd_formCancelText">Annuler</string>
+
+    <string name="unlock_text1">Vous devez deviner</string>
+    <string name="unlock_text2">animaux dans n"'"importe quel jeu pour déverrouiller cet onglet</string>
 
 <string name="fromdottodot">Nous tirons sur les points</string>
 <string name="draw">Dessin</string>

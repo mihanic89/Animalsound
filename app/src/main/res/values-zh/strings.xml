@@ -15,13 +15,16 @@
     <string name="clicktext">点击文本</string>
     <string name="gametext">通過聲音猜測動物</string>
     <string name="buy_ads_disable">删除广告</string>
-    <string name="rd_title">你喜欢这个应用吗？</string>
+    <string name="rd_title">你想要Google Play中的评分应用吗？</string>
     <string name="rd_positiveButtonText">后来</string>
     <string name="rd_negativeButtonText">从来没有</string>
     <string name="rd_formTitle">发送反馈</string>
     <string name="rd_formHint">告诉我们可以改进的地方。</string>
     <string name="rd_formSubmitText">送</string>
     <string name="rd_formCancelText">消除</string>
+
+    <string name="unlock_text1">你得猜猜</string>
+    <string name="unlock_text2">动物在任何游戏解锁这个标签</string>
 
 <string name="fromdottodot">画一个点</string>
 <string name="draw">绘图</string>
