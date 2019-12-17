@@ -20,6 +20,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -33,7 +44,6 @@ import com.bumptech.glide.Priority;
 import com.codemybrainsout.ratingdialog.RatingDialog;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -50,17 +60,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
@@ -90,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
     private static final String NUMBER_OF_RATING_START_KEY="number_of_rating_start";
     private static final  String DONT_SHOW_RATING_DIALOF_KEY="dont_show_rating_dialog";
     private static final String KEY_TO_UNLOCK_FAIRY = "unlockFairy";
+    private static final String REVIEW_ENABLED="ReviewEnabled";
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
     public boolean ads_disable_button=false;
     private boolean dontShowRatingDialog=true;
+    private boolean review_enabled = true;
     private int numRatingDialog=0;
 
     private int firstTab = 3;
@@ -409,23 +410,29 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         }
 
 
+
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-2888343178529026~2046736590");
 
-        if (!ads_disabled) {
 
-            mAdView = findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder()
-                    // .addNetworkExtrasBundle(AdMobAdapter.class, extrasAdview)
-                    // .addNetworkExtrasBundle(AdMobAdapter.class, extras)
-                    //.tagForChildDirectedTreatment(true)
-                    .addTestDevice("634EE6DF579E0E01020981609CDA857D")
-                    .addTestDevice("A4203BC89A24BEEC45D1111F16D2F0A3")
-                    .addTestDevice("4174C23AC2A2DAFD78A7C0F0DFB39F3E") //Samsung A50
-                    .addTestDevice("7A4531178089C7C58205C7AA937079B6") //Nexus
-                    //.addTestDevice("09D7B5315C60A80D280B8CDF618FD3DE")
-                    .build();
-            mAdView.loadAd(adRequest);
-        }
+
+
+                if (!ads_disabled) {
+
+                    mAdView = findViewById(R.id.adView);
+                    AdRequest adRequest = new AdRequest.Builder()
+                            // .addNetworkExtrasBundle(AdMobAdapter.class, extrasAdview)
+                            // .addNetworkExtrasBundle(AdMobAdapter.class, extras)
+                            //.tagForChildDirectedTreatment(true)
+                            .addTestDevice("634EE6DF579E0E01020981609CDA857D")
+                            .addTestDevice("A4203BC89A24BEEC45D1111F16D2F0A3")
+                            .addTestDevice("4174C23AC2A2DAFD78A7C0F0DFB39F3E") //Samsung A50
+                            .addTestDevice("7A4531178089C7C58205C7AA937079B6") //Nexus
+                            //.addTestDevice("09D7B5315C60A80D280B8CDF618FD3DE")
+                            .build();
+                    mAdView.loadAd(adRequest);
+                }
+
+
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-2888343178529026/6970013790");
@@ -610,7 +617,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         */
 
 
-        if (ratingCounter>3 && !ratingDialogWasShown){
+        if (ratingCounter>3 && !ratingDialogWasShown && review_enabled){
             showRatingDialog();
             ratingDialogWasShown=true;
             SharedPreferences getPrefs = PreferenceManager
@@ -622,13 +629,17 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
            // adCount=0;
         }
 
-            if (mInterstitialAd != null && mInterstitialAd.isLoaded() ) {
+        else {
+
+            if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
                 mFirebaseAnalytics.logEvent("interstitial_show", null);
-             }
-            else {
-                mFirebaseAnalytics.logEvent("interstitial_is_null_or_not_loaded", null);
+            } else {
+                Bundle params = new Bundle();
+                params.putInt("adCount", adCount);
+                mFirebaseAnalytics.logEvent("interstitial_is_null_or_not_loaded", params);
             }
+        }
     }
 
 
@@ -674,6 +685,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
                             dontShowRatingDialog=true;
                             e.putBoolean(DONT_SHOW_RATING_DIALOF_KEY, true);
                             e.apply();
+                            mFirebaseAnalytics.logEvent("rating_dialog_4_and_less", null);
                             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                     "mailto", "contact@yapapa.xyz", null));
                             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
@@ -836,7 +848,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
             //adCount++;
             incAdCounter();
-            if (adCount>14){
+            if (adCount>15){
                 showInterstitial();
 
             }
@@ -874,7 +886,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
                 case 7:
                     mFirebaseAnalytics.logEvent("tab_fairy", null);
 
-                    if (unlockCounter<29) {
+                    if (unlockCounter<9) {
                         return FragmentUnlockFairy.newInstance(unlockCounter);
                     }
                     else {
@@ -896,7 +908,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
     @Override
     public void onResume() {
-        super.onResume();
+
         // Resume the AdView.
         if (!ads_disabled) {
             try {
@@ -906,6 +918,8 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
             }
         }
+
+        super.onResume();
     }
 
     @Override
@@ -939,6 +953,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         }
 
         GlideApp.get(this).clearMemory();
+        SoundPlay.clearSP(this);
         super.onDestroy();
 
     }
@@ -1239,6 +1254,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         fairy.add(new Animal(getString(R.string.phoenix), R.drawable.f7hd,R.raw.f7,true, "f7.gif"));
         fairy.add(new Animal(getString(R.string.waternymph), R.drawable.f8hd,R.raw.f8));
         fairy.add(new Animal(getString(R.string.griffon), R.drawable.f9hd,R.raw.f9));
+        fairy.add(new Animal(getString(R.string.yeti), R.drawable.f10hd,R.raw.f10));
 
 
         animals =new ArrayList<Animal>();
@@ -1247,7 +1263,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         animals.addAll(birds);
         animals.addAll(aqua);
         animals.addAll(insects);
-        if (unlockCounter>50) {
+        if (unlockCounter>9) {
             animals.addAll(fairy);
         }
 
@@ -1303,6 +1319,10 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
                             else {
                                 grid=false;
 
+                            }
+
+                            if (!mFirebaseRemoteConfig.getBoolean(REVIEW_ENABLED)) {
+                                review_enabled = false;
                             }
 
                             e.putBoolean(GRID_MINIMIZATION_KEY,grid);
@@ -1365,7 +1385,9 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
             return;
         }
         else {
-            showRatingDialog();
+            if (review_enabled) {
+                showRatingDialog();
+            }
             backPressedToExitOnce=true;
 
         }

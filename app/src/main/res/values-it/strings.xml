@@ -17,7 +17,7 @@
     <string name="game">Gioco</string>
     <string name="buy_ads_disable">Rimuovi annunci</string>
 
-    <string name="rd_title">Vuoi valutare l"'"app in Google Play?</string>
+    <string name="rd_title">Ti e"'"piaciuta la domanda?</string>
     <string name="rd_positiveButtonText">Più tardi</string>
     <string name="rd_negativeButtonText">mai</string>
     <string name="rd_formTitle">Invia feedback</string>
@@ -168,5 +168,7 @@
     <string name="ferret">Furetto</string>
     <string name="lizard">Lucertola</string>
     <string name="wolverine">ghiottone</string>
+
+    <string name="yeti">Yeti</string>
 
 </resources>

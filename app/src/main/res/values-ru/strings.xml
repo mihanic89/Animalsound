@@ -16,7 +16,7 @@
     <string name="gametext">Угадывайте животных в играх</string>
     <string name="buy_ads_disable">Убрать рекламу</string>
 
-    <string name="rd_title">Хотите поставить оценку в Google play?</string>
+    <string name="rd_title">Вам понравилось приложение?</string>
     <string name="rd_positiveButtonText">Позже</string>
     <string name="rd_negativeButtonText">Никогда</string>
     <string name="rd_formTitle">Отправить отзыв</string>
@@ -94,7 +94,7 @@
     <string name="snake">Змея</string>
     <string name="squirrel">Белка</string>
     <string name="tiger">Тигр</string>
-    <string name="turkey">Индейка</string>
+    <string name="turkey">Индюк</string>
     <string name="walrus">Морж</string>
     <string name="whale">Кит</string>
     <string name="wolf">Волк</string>
@@ -171,5 +171,7 @@
     <string name="ferret">Хорёк</string>
     <string name="lizard">Ящерица</string>
     <string name="wolverine">Росомаха</string>
+
+    <string name="yeti">Йети</string>
 
 </resources>
