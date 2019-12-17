@@ -31,14 +31,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingFlowParams;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
-import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
-import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.bumptech.glide.MemoryCategory;
 import com.bumptech.glide.Priority;
 import com.codemybrainsout.ratingdialog.RatingDialog;
@@ -136,8 +128,6 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
 
     //по покупкам
-    private BillingClient mBillingClient;
-    private Map<String, SkuDetails> mSkuDetailsMap = new HashMap<>();
     private String mSkuId = "disable_ads";
     private List<String> skuList = new ArrayList<>();
     private SharedPreferences getPrefs;
@@ -180,53 +170,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
         unlockCounter = getPrefs.getInt(KEY_TO_UNLOCK_FAIRY,0);
 
-        mBillingClient = BillingClient.newBuilder(this).setListener(new PurchasesUpdatedListener() {
-            @Override
-            public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-                if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
-                    //сюда мы попадем когда будет осуществлена покупка
-                    payComplete();
-                }
-            }
-        }).build();
-        mBillingClient.startConnection(new BillingClientStateListener() {
-            @Override
-            public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-                if (billingResponseCode == BillingClient.BillingResponse.OK) {
-                    //здесь мы можем запросить информацию о товарах и покупках
 
-                    querySkuDetails();
-
-                    List<Purchase> purchasesList = queryPurchases(); //запрос о покупках
-
-
-                    if (purchasesList!=null) {
-                        try {
-                            boolean pay = false;
-                            for (int i = 0; i < purchasesList.size(); i++) {
-                                String purchaseId = purchasesList.get(i).getSku();
-                                if (TextUtils.equals(mSkuId, purchaseId)) {
-                                    payComplete();
-                                    pay = true;
-                                }
-                            }
-
-                            if (!pay) {
-                                payUnComplete();
-                            }
-                        }
-                        catch (Exception ex){
-
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onBillingServiceDisconnected() {
-                //сюда мы попадем если что-то пойдет не так
-            }
-        });
 
         //  Declare a new thread to do a preference check
         Thread t = new Thread(new Runnable() {
@@ -497,78 +441,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
 
 
-    private void querySkuDetails() {
-        SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
-        skuList.add("disable_ads");
-        params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS);
 
-        mBillingClient.querySkuDetailsAsync(params.build(), new SkuDetailsResponseListener() {
-            @Override
-            public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
-                if (responseCode == 0) {
-                    /*
-                    Toast toast = Toast.makeText(getApplication(),
-                            "ответ получен " + skuDetailsList.size(), Toast.LENGTH_SHORT);
-                    toast.show();
-                    */
-                    for (SkuDetails skuDetails : skuDetailsList) {
-                        mSkuDetailsMap.put(skuDetails.getSku(), skuDetails);
-                    }
-                }
-            }
-        });
-
-    }
-
-    private List<Purchase> queryPurchases() {
-        Purchase.PurchasesResult purchasesResult=null;
-        if (areSubscriptionsSupported()) {
-             purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.SUBS);
-        }
-
-
-
-        if (purchasesResult!=null && purchasesResult.getPurchasesList()!=null){
-        return purchasesResult.getPurchasesList();}
-        else return null;
-    }
-
-    public boolean areSubscriptionsSupported() {
-        int responseCode = mBillingClient.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS);
-        return responseCode == BillingClient.BillingResponse.OK;
-    }
-    public void launchBilling(String skuId) {
-
-
-
-        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
-                .setSkuDetails(mSkuDetailsMap.get(mSkuId))
-                .build();
-        mBillingClient.launchBillingFlow(this, billingFlowParams);
-    }
-
-    public void payComplete(){
-
-     //   Toast toast = Toast.makeText(this,
-      //          "payComplete()", Toast.LENGTH_SHORT);
-     //   toast.show();
-
-        removeAd();
-        writeBoolean(true);
-    }
-
-    public void payUnComplete(){
-
-       // Toast toast = Toast.makeText(this,
-      //          "payUnComplete()", Toast.LENGTH_SHORT);
-      //  toast.show();
-
-        //removeAd();
-        writeBoolean(false);
-        //loadInterstitial();
-      //  ProcessPhoenix.triggerRebirth(this);
-
-    }
 
 
     public void writeBoolean (boolean enabled){
@@ -760,17 +633,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
 
     }
 
-    public void launchBilling() {
-        /*
-        mAdView.setEnabled(false);
-        mAdView.destroy();
-        mAdView.setVisibility(View.INVISIBLE);
-        */
-        //View view = getWindow().getDecorView();
-       // removeAd();
-        launchBilling(mSkuId);
 
-    }
 
     private void removeAd() {
         if (mAdView != null && !ads_disabled) {
