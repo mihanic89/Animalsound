@@ -33,7 +33,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.MemoryCategory;
 import com.bumptech.glide.Priority;
-import com.codemybrainsout.ratingdialog.RatingDialog;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -490,19 +490,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         */
 
 
-        if (ratingCounter>3 && !ratingDialogWasShown && review_enabled){
-            showRatingDialog();
-            ratingDialogWasShown=true;
-            SharedPreferences getPrefs = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
-            SharedPreferences.Editor e = getPrefs.edit();
-            e.putBoolean(RATING_DIALOG_WAS_SHOWN_KEY,true);
-            e.apply();
-            ratingCounter=0;
-           // adCount=0;
-        }
 
-        else {
 
             if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
@@ -512,72 +500,13 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
                 params.putInt("adCount", adCount);
                 mFirebaseAnalytics.logEvent("interstitial_is_null_or_not_loaded", params);
             }
-        }
-    }
-
-
-
-
-    public void showRatingDialog (){
-
-        if (!dontShowRatingDialog && !ads_disabled) {
-
-            final RatingDialog ratingDialog = new RatingDialog.Builder(this)
-                    .threshold(4)
-
-                    .title(getString(R.string.rd_title))
-                    .positiveButtonText(getString(R.string.rd_positiveButtonText))
-                    .negativeButtonText(getString(R.string.rd_negativeButtonText))
-
-                    .formTitle(getString(R.string.rd_formTitle))
-                    .formHint(getString(R.string.rd_formHint))
-                    .formSubmitText(getString(R.string.rd_formSubmitText))
-                    .formCancelText(getString(R.string.rd_formCancelText))
-                    .onThresholdCleared(new RatingDialog.Builder.RatingThresholdClearedListener() {
-                        @Override
-                        public void onThresholdCleared(RatingDialog ratingDialog, float rating, boolean thresholdCleared) {
-                            //do something
-                            openPlaystore(MainActivity.this);
-                            mFirebaseAnalytics.logEvent("rating_dialog_5star", null);
-                            SharedPreferences getPrefs = PreferenceManager
-                                    .getDefaultSharedPreferences(getBaseContext());
-                            SharedPreferences.Editor e = getPrefs.edit();
-                            dontShowRatingDialog=true;
-                            e.putBoolean(DONT_SHOW_RATING_DIALOF_KEY, true);
-                            e.apply();
-                            ratingDialog.dismiss();
-                        }
-                    })
-                    //.session(7)
-                    .onRatingBarFormSumbit(new RatingDialog.Builder.RatingDialogFormListener() {
-                        @Override
-                        public void onFormSubmitted(String feedback) {
-                            SharedPreferences getPrefs = PreferenceManager
-                                    .getDefaultSharedPreferences(getBaseContext());
-                            SharedPreferences.Editor e = getPrefs.edit();
-                            dontShowRatingDialog=true;
-                            e.putBoolean(DONT_SHOW_RATING_DIALOF_KEY, true);
-                            e.apply();
-                            mFirebaseAnalytics.logEvent("rating_dialog_4_and_less", null);
-                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                                    "mailto", "contact@yapapa.xyz", null));
-                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
-                            emailIntent.putExtra(Intent.EXTRA_TEXT, feedback);
-                            try {
-                                startActivity(Intent.createChooser(emailIntent, "Send email..."));
-                            } catch (Exception ex) {
-
-                            }
-                        }
-                    }).build();
-
-            ratingDialog.show();
-            // incrementRating();
-            mFirebaseAnalytics.logEvent("rating_dialog", null);
-        }
-
 
     }
+
+
+
+
+
 
 
     public void playSilence (int mseconds){
@@ -1239,23 +1168,7 @@ public class MainActivity extends AppCompatActivity implements TTSListener  {
         return grid;
     }
 
-    @Override
-    public void onBackPressed() {
-        incrementRating();
-        if (backPressedToExitOnce) {
-        //if (false){
-            super.onBackPressed();
-            return;
-        }
-        else {
-            if (review_enabled) {
-                showRatingDialog();
-            }
-            backPressedToExitOnce=true;
 
-        }
-
-    }
 
     public void incrementRating(){
         numRatingDialog++;
